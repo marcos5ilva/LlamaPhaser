@@ -28,7 +28,7 @@ gameScene.preload = function () {
 
     //Load game spritesheets      
     this.load.spritesheet('player', 'Assets/img/llamaSprite.png',
-    { frameWidth: 129.083, frameHeight: 159 });
+    { frameWidth: 129.083, frameHeight: 162 });
 
     //Load game audio
     this.load.audio('levelTheme', ['assets/sound/levelTheme.mp3']);
