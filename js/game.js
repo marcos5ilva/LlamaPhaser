@@ -5,8 +5,14 @@ let gameScene = new Phaser.Scene('Game');
 // our game's configuration
 let config = {
 type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
-width: 800, // game width
-height: 600, // game height
+parent: "game-screen",
+width: 900, // game width
+height: 550, // game height
+physics:{
+    default: 'arcade',
+        gravity:{y:300},
+        debug: false
+},
 scene: gameScene // our newly created scene
 };
 
@@ -25,10 +31,16 @@ gameScene.preload = function () {
     // Load images
     //this.load.image('llamas', 'Assets/llamaPlayer.png');
     this.load.image('bg', 'Assets/img/bg.png');
+    this.load.image('forest', 'Assets/img/forest.png');
+    this.load.image('constructionDown', 'Assets/img/constructionRightDown.png');
+    this.load.image('walkway', 'Assets/img/walkway.png');
+    this.load.image('redFlower', 'Assets/img/redFlower.png');
+    this.load.image('pinkFlower', 'Assets/img/pinkFlower.png');
 
     //Load game spritesheets      
     this.load.spritesheet('player', 'Assets/img/llamaSprite.png',
     { frameWidth: 129.083, frameHeight: 162 });
+    
 
     //Load game audio
     this.load.audio('levelTheme', ['assets/sound/levelTheme.mp3']);
@@ -42,10 +54,44 @@ gameScene.create = function () {
     let bg = this.add.sprite(0, 0, 'bg');
     bg.setScale(2);
 
+     //Walkway background
+    let walkway = this.add.sprite(400, 300, 'walkway');
+    walkway.setScale(1.2);
+
+    //Create setting group for collision
+    setting = this.physics.add.staticGroup();
+    setting.create(160, 150, 'forest');
+    setting.create(800, 400, 'constructionDown');
+
+    //Flowers
+    let redFlower1 = this.add.sprite(100, 400, 'redFlower');
+    let pinkFlower1 = this.add.sprite(150, 400, 'pinkFlower');
+    let redFlower2 = this.add.sprite(600, 200, 'redFlower');
+    let pinkFlower2 = this.add.sprite(650, 200, 'pinkFlower');
+   
+
+    //Forest background
+   /* let forest = this.physics.add.sprite(160, 150, 'forest');
+ 
+
+    //Construction background
+    let contructionDown = this.add.sprite(800, 400, 'constructionDown');*/
+
+     
+
     //Player definitions
-    this.player = this.add.sprite(400, 300, 'llamas');
+    this.player = this.physics.add.sprite(400, 300, 'llamas');
     this.player.setScale(0.7);
+    this.player.body.setGravityX(0);
+    
+
+     
+    
+    this.player.setCollideWorldBounds(true);
     //this.player.anchor.setTo(0.5);
+
+  //Collision detection
+     this.physics.add.collider(this.player, setting);
 
     //Animations Definitions
     this.anims.create({
@@ -69,11 +115,12 @@ gameScene.create = function () {
         repeat: -1
     });
 
+  
     //Create game audio
     this.levelTheme = this.sound.add('levelTheme');
 
     //Playing game audio
-    this.levelTheme.play();
+    //this.levelTheme.play();
 
 };
 
@@ -123,6 +170,8 @@ gameScene.update = function () {
     {
         this.player.anims.play('right', false);
     }
+
+     
     
    
 }

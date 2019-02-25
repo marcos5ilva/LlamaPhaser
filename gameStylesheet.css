@@ -1,4 +1,21 @@
 body{
     overflow: hidden;
+    background-color: #00dcf8;
    
 }
+
+.game-screen canvas{
+    position: absolute;
+    border-style: solid;
+    border-width: 25px;
+    border-color: brown;
+    margin-left:-450px;
+    left: 50%;
+    border-radius: 35px;
+    text-align: center;
+}
+/*.canvas-style{
+    border-style: solid;
+    border-width: 20px;
+    border-color: brown;
+}*/
