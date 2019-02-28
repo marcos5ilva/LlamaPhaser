@@ -9,9 +9,13 @@ parent: "game-screen",
 width: 900, // game width
 height: 550, // game height
 physics:{
-    default: 'arcade',
-        gravity:{y:300},
-        debug: false
+    default: 'matter',
+    matter: {
+        gravity: {
+            x: 0,
+            y: 0
+        }
+    }
 },
 scene: gameScene // our newly created scene
 };
@@ -38,8 +42,8 @@ gameScene.preload = function () {
     this.load.image('pinkFlower', 'Assets/img/pinkFlower.png');
 
     //Load game spritesheets      
-    this.load.spritesheet('player', 'Assets/img/llamaSprite.png',
-    { frameWidth: 129.083, frameHeight: 162 });
+    this.load.spritesheet('player', 'Assets/img/playerSpriteSheet.svg',
+    { frameWidth: 82.59, frameHeight: 162, endFrame: 10 });
     
 
     //Load game audio
@@ -59,9 +63,9 @@ gameScene.create = function () {
     walkway.setScale(1.2);
 
     //Create setting group for collision
-    setting = this.physics.add.staticGroup();
+    /*setting = this.matter.add.staticGroup();
     setting.create(160, 150, 'forest');
-    setting.create(800, 400, 'constructionDown');
+    setting.create(800, 400, 'constructionDown');*/
 
     //Flowers
     let redFlower1 = this.add.sprite(100, 400, 'redFlower');
@@ -71,27 +75,27 @@ gameScene.create = function () {
    
 
     //Forest background
-   /* let forest = this.physics.add.sprite(160, 150, 'forest');
+   let forest = this.matter.add.sprite(160, 150, 'forest').setStatic(true);
  
 
     //Construction background
-    let contructionDown = this.add.sprite(800, 400, 'constructionDown');*/
+    let contructionDown = this.matter.add.sprite(800, 400, 'constructionDown').setStatic(true);
 
      
 
     //Player definitions
-    this.player = this.physics.add.sprite(400, 300, 'llamas');
+    this.player = this.matter.add.sprite(400, 300, 'llamas');
     this.player.setScale(0.7);
-    this.player.body.setGravityX(0);
+    //this.player.body.setGravityX(0);
     
 
      
     
-    this.player.setCollideWorldBounds(true);
+    //this.player.setCollideWorldBounds(true);
     //this.player.anchor.setTo(0.5);
 
   //Collision detection
-     this.physics.add.collider(this.player, setting);
+     //this.physics.add.collider(this.player, setting);
 
     //Animations Definitions
     this.anims.create({
@@ -120,7 +124,7 @@ gameScene.create = function () {
     this.levelTheme = this.sound.add('levelTheme');
 
     //Playing game audio
-    //this.levelTheme.play();
+    this.levelTheme.play();
 
 };
 
